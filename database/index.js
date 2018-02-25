@@ -1,27 +1,29 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
+const db = mongoose.connection;
+
 mongoose.connect('mongodb://localhost/photos');
 
-var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
+
 db.once('open', () => {
   console.log('Photos database connected!');
 });
 
-var photosSchema = mongoose.Schema({
-  id: Number, //Restaurant ID
+let photosSchema = mongoose.Schema({
+  id: {type: Number, unique: true}, //Restaurant ID 
   photos: [] //Array of associated photos
 });
 
-var Restaurant = mongoose.model('Restaurant', photosSchema);
+let Restaurant = mongoose.model('Restaurant', photosSchema);
 
-var addRestaurant = (id, photos) => {
-  var entry = new Restaurant({
+let addPhotos = (id, photos) => {
+  let entry = new Restaurant({
     id: id,
     photos: photos
   });
 
-  entry.save((error)=>{
-    if(error){
+  entry.save((error) => {
+    if(error) {
       console.log(error);
     } else {
       console.log('Entry saved!');
@@ -29,13 +31,9 @@ var addRestaurant = (id, photos) => {
   });
 };
 
-var findPhotos = (id, callback) => {
+let findPhotos = (id, callback) => {
   callback(Restaurant.find({}));
 }
 
-addRestaurant(1, [1,2,3,4,5]);
-
-module.exports.addRestaurant = addRestaurant;
+module.exports.addPhotos = addPhotos;
 module.exports.findPhotos = findPhotos;
-
-//http://s3-media3.fl.yelpcdn.com/bphoto/${photo_id}/o.jpg
