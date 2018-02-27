@@ -3,7 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
 const axios = require('axios');
-var database = require('../database/index.js');
+const database = require('../database/index.js');
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 

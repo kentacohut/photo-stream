@@ -63,8 +63,8 @@ class App extends React.Component {
       <div>
         <div className="test">
         <Gallery photos={this.state.photos} 
-        onClick={this.openLightbox} 
-        columns={Math.ceil(this.state.photos.length/2)} //Always creates two rows of photos
+          onClick={this.openLightbox} 
+          columns={Math.ceil(this.state.photos.length/2)} //Makes enough columns so there will be always be two rows
         />
         <Lightbox images={this.state.photos}
           onClose={this.closeLightbox}
@@ -74,7 +74,7 @@ class App extends React.Component {
           isOpen={this.state.lightboxIsOpen}
           showImageCount={false}
         />
-      </div>
+        </div>
       </div>
     )
   }
