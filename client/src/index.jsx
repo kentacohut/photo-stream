@@ -14,6 +14,7 @@ class App extends React.Component {
     this.openLightbox = this.openLightbox.bind(this);
     this.gotoNext = this.gotoNext.bind(this);
     this.gotoPrevious = this.gotoPrevious.bind(this);
+    this.findPhotos = this.findPhotos.bind(this);
   }
 
   openLightbox(event, obj) {
@@ -42,27 +43,29 @@ class App extends React.Component {
     });
   }
 
-
+  findPhotos() {
+    let context = this;
+    axios.get('/photos').
+    then((photos) => {
+      context.setState({'photos': photos.data.photos});
+    }).
+    catch((error) => {
+      console.log(error);
+    });
+  }
 
   componentDidMount(){
-    this.setState({photos: [
-      { src: 'https://source.unsplash.com/2ShvY8Lf6l0/800x599', width: 4, height: 3, caption: 'Just a caption.' },
-      { src: 'https://source.unsplash.com/Dm-qxdynoEc/800x799', width: 1, height: 1 },
-      { src: 'https://source.unsplash.com/qDkso9nvCg0/600x799', width: 3, height: 4 },
-      { src: 'https://source.unsplash.com/iecJiKe_RNg/600x799', width: 3, height: 4 },
-      { src: 'https://source.unsplash.com/epcsn8Ed8kY/600x799', width: 3, height: 4 },
-      { src: 'https://source.unsplash.com/NQSWvyVRIJk/800x599', width: 4, height: 3 },
-      { src: 'https://source.unsplash.com/zh7GEuORbUw/600x799', width: 3, height: 4 },
-      { src: 'https://source.unsplash.com/PpOHJezOalU/800x599', width: 4, height: 3 },
-      { src: 'https://source.unsplash.com/I1ASdgphUH4/800x599', width: 4, height: 3 }
-      ]});
+    this.findPhotos();
   }
 
   render() {
     return (
       <div>
         <div className="test">
-        <Gallery photos={this.state.photos} onClick={this.openLightbox} columns={5}/>
+        <Gallery photos={this.state.photos} 
+          onClick={this.openLightbox} 
+          columns={Math.ceil(this.state.photos.length/2)} //Makes enough columns so there will be always be two rows
+        />
         <Lightbox images={this.state.photos}
           onClose={this.closeLightbox}
           onClickPrev={this.gotoPrevious}
@@ -71,7 +74,7 @@ class App extends React.Component {
           isOpen={this.state.lightboxIsOpen}
           showImageCount={false}
         />
-      </div>
+        </div>
       </div>
     )
   }
