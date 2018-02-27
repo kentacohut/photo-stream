@@ -22,17 +22,13 @@ let addPhotos = (id, photos) => {
     photos: photos
   });
 
-  entry.save((error) => {
-    if(error) {
-      console.log(error);
-    } else {
-      console.log('Entry saved!');
-    }
-  });
+  entry.save()
+  .then(console.log('Entry saved!'))
+  .catch(error=>console.log(error));
 };
 
 let findPhotos = (id, callback) => {
-  callback(Restaurant.find({}));
+  Restaurant.find({'id': id}).exec(callback);
 }
 
 module.exports.addPhotos = addPhotos;
