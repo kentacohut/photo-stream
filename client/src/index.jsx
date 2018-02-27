@@ -43,9 +43,11 @@ class App extends React.Component {
     });
   }
 
-  findPhotos() {
+  findPhotos(id = '1') {
     let context = this;
-    axios.get('/photos').
+    axios.get('/photos', {
+      params: {id: id}
+    }).
     then((photos) => {
       context.setState({'photos': photos.data.photos});
     }).
@@ -55,7 +57,8 @@ class App extends React.Component {
   }
 
   componentDidMount(){
-    this.findPhotos();
+    let url = window.location.href.split("/").pop().substring(4) || '1'; //Grabs pa 
+    this.findPhotos(url);
   }
 
   render() {
