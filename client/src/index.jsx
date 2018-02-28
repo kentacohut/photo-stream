@@ -43,7 +43,7 @@ class App extends React.Component {
     });
   }
 
-  findPhotos(id = '1') {
+  findPhotos(id) {
     let context = this;
     axios.get('/photos', {
       params: {id: id}
@@ -57,8 +57,8 @@ class App extends React.Component {
   }
 
   componentDidMount(){
-    let url = window.location.href.split("/").pop().substring(4) || '1'; //Grabs pa 
-    this.findPhotos(url);
+    let id = window.location.href.split("/").pop().substring(4) || '1'; //Grabs params from url 
+    this.findPhotos(id);
   }
 
   render() {

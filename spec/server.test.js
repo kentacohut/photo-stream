@@ -14,3 +14,12 @@ describe('Test the photos path', () => {
       expect(response.statusCode).toBe(200);
   });
 })
+
+describe('Test the server\'s get call to database', () => {
+  test('It should respond with photos', async () => {
+      const response = await request(server)
+      .get('/photos')
+      .query({id: 1});
+      expect(response.body.photos).toBeDefined();
+  });
+})
