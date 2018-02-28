@@ -11,7 +11,8 @@
     "server": "nodemon --inspect ./server/server.js",
     "react-dev": "webpack -d --watch ",
     "mongo": "nodemon ./database/index.js",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "seed": "node ./database/seed.js"
   },
   "dependencies": {
     "axios": "^0.17.1",
