@@ -44,12 +44,11 @@ class App extends React.Component {
   }
 
   findPhotos(id) {
-    let context = this;
     axios.get('/photos', {
       params: {id: id}
     }).
     then((photos) => {
-      context.setState({'photos': photos.data.photos});
+      this.setState({'photos': photos.data.photos});
     }).
     catch((error) => {
       console.log(error);
