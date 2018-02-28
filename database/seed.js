@@ -9,6 +9,9 @@ let seedDb = function(photos) {
     let shuffled = photos.sort(() => .5 - Math.random());// shuffle photos  
     let selected = shuffled.slice(0, (Math.floor(Math.random()*(4)+5))) ; // get new array between 5 - 8 photos
     database.addPhotos(i, selected);
+    if(i === 200){
+      mongoose.disconnect(); // Disconnects after last entry to database
+    }
   }
 };
 

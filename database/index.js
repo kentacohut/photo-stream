@@ -1,12 +1,14 @@
 const mongoose = require('mongoose');
 const db = mongoose.connection;
 
-mongoose.connect('mongodb://localhost/photos');
-
 db.on('error', console.error.bind(console, 'connection error:'));
 
-db.once('open', () => {
+db.on('connected', () => {
   console.log('Photos database connected!');
+});
+
+db.on('disconnected', () => {
+  console.log('Photos database disconnected!');
 });
 
 let photosSchema = mongoose.Schema({
@@ -28,6 +30,7 @@ let addPhotos = (id, photos) => {
 };
 
 let findPhotos = (id, callback) => {
+  mongoose.connect('mongodb://localhost/photos');
   Restaurant.find({'id': id}).exec(callback);
 }
 
