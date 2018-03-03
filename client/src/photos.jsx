@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Gallery from 'react-photo-gallery';
 import Lightbox from 'react-images';
 import axios from 'axios';
+import $ from 'jquery';
 import styles from './photos.css';
 
 class App extends React.Component {
@@ -16,6 +17,8 @@ class App extends React.Component {
     this.gotoNext = this.gotoNext.bind(this);
     this.gotoPrevious = this.gotoPrevious.bind(this);
     this.findPhotos = this.findPhotos.bind(this);
+    this.openReportPhoto = this.openReportPhoto.bind(this);
+    this.closeReportPhoto = this.closeReportPhoto.bind(this);
   }
 
   openLightbox(event, obj) {
@@ -30,6 +33,18 @@ class App extends React.Component {
       currentImage: 0,
       lightboxIsOpen: false,
     });
+  }
+
+  openReportPhoto() {
+    this.setState({
+      reportPhotoIsOpen: true
+    })
+  }
+
+  closeReportPhoto() {
+    this.setState({
+      reportPhotoIsOpen: false
+    })
   }
 
   gotoPrevious() {
@@ -59,6 +74,10 @@ class App extends React.Component {
   componentDidMount(){
     let id = window.location.href.split("/").pop().substring(4) || '1'; //Grabs params from url 
     this.findPhotos(id);
+  }
+
+  componentDidUpdate(){
+    $('div[class^="footerCount"]').on('click', ()=>{this.openReportPhoto()});
   }
 
   render() {
